@@ -1,7 +1,3 @@
-<p align="center">
-<img src="https://wesleybatista.gallerycdn.vsassets.io/extensions/wesleybatista/sqlmeshui/0.0.11/1614585407925/Microsoft.VisualStudio.Services.Icons.Default" alt="Logo" height="100"/>
-</p>
-
 <h1 align="center">
 SQLMesh UI
 </h1>
@@ -23,7 +19,9 @@ Embedded SQLMesh UI in VS Code
 
 1. [Python extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python) enabled
 2. SQLMesh set up in a virtual environment, as described in [Installation guide](https://sqlmesh.readthedocs.io/en/stable/installation/).
+
 ## Demo
+
 <p align="center">
 <figure>
 	<picture>
@@ -47,7 +45,6 @@ Embedded SQLMesh UI in VS Code
 	</picture>
 	<p align="center"><em>Tabs split horizontally</em></p>
 </figure>
-
 
 <figure>
 	<picture>

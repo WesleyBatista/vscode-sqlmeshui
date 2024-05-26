@@ -2,11 +2,7 @@
   "compilerOptions": {
     "target": "es2017",
     "jsx": "react-jsx",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -22,7 +18,5 @@
     "isolatedModules": true,
     "skipLibCheck": true
   },
-  "include": [
-    "client"
-  ]
+  "include": ["client"]
 }

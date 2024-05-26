@@ -8,7 +8,8 @@
   height: 29px;
 }
 
-input, select {
+input,
+select {
   color: var(--vscode-input-foreground);
   border: 0;
   outline: none !important;
@@ -19,7 +20,10 @@ input, select {
   overflow: hidden;
 }
 
-input:focus, select:focus, input:active, select:active {
+input:focus,
+select:focus,
+input:active,
+select:active {
   border-color: var(--vscode-inputOption-activeBorder);
   color: var(--vscode-inputOption-activeForeground);
 }

@@ -1,32 +1,30 @@
 import type { ExtensionContext, Uri } from 'vscode'
 import { commands, debug, window } from 'vscode'
-import { join, sep } from 'path'
 
 import { DebugProvider } from './DebugProvider'
 import { PanelManager } from './PanelManager'
 import { registerLogger, traceError, traceLog, traceVerbose } from './log/logging'
-import { checkVersion, getInterpreterDetails, initializePython, resolveInterpreter, runPythonExtensionCommand } from './python'
+import { checkVersion, getInterpreterDetails, initializePython, resolveInterpreter } from './python'
 import { getConfig, getConfigs } from './Config'
-import Terminal from './terminal'
+import type Terminal from './terminal'
 
-let restartInProgress = false;
-let restartQueued = false;
+let restartInProgress = false
+let restartQueued = false
 
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
 
 function replacePathLastPart(path, newPart) {
-  const parts = path.split('/');
-  parts[parts.length - 1] = newPart;
-  return parts.join('/');
+  const parts = path.split('/')
+  parts[parts.length - 1] = newPart
+  return parts.join('/')
 }
-
 
 export async function activate(ctx: ExtensionContext): Promise<void> {
   const manager = new PanelManager(ctx)
   const debugProvider = new DebugProvider(manager)
-  registerLogger(window.createOutputChannel("SQLMesh UI", { log: true }))
+  registerLogger(window.createOutputChannel('SQLMesh UI', { log: true }))
   loadPythonExtension(ctx)
-  let terminal: Terminal | null = null;
+  const terminal: Terminal | null = null
 
   ctx.subscriptions.push(
 
@@ -37,22 +35,23 @@ export async function activate(ctx: ExtensionContext): Promise<void> {
 
     commands.registerCommand('sqlmeshui.open', async (url?: string | Uri) => {
       const configs = getConfigs(ctx)
-      const pythonInterpreter = (await getInterpreterDetails()).path?.at(0);
-      if(!pythonInterpreter) throw "pythonInterpreter is not found!"
+      const pythonInterpreter = (await getInterpreterDetails()).path?.at(0)
+      if (!pythonInterpreter)
+        throw new Error('pythonInterpreter is not found!')
       const sqlmeshPath = replacePathLastPart(pythonInterpreter, 'sqlmesh')
       traceLog(sqlmeshPath)
-    
+
       const cmd = [
-        "ui",
-        "--host",
+        'ui',
+        '--host',
         configs.localServerHost,
-        "--port",
+        '--port',
         configs.localServerPort.toString(),
-        "--mode",
+        '--mode',
         configs.localServerMode,
       ]
       traceLog(cmd)
-    
+
       // terminal = new Terminal("SQLMesh UI", sqlmeshPath)
       // await terminal?.runCommandInBackground(cmd)
       // await sleep(3)
@@ -94,84 +93,82 @@ export async function activate(ctx: ExtensionContext): Promise<void> {
   // catch {}
 }
 
-async function runServer () {
+async function runServer() {
   if (restartInProgress) {
     if (!restartQueued) {
       // Schedule a new restart after the current restart.
       traceLog(
         `Triggered restart while restart is in progress; queuing a restart.`,
-      );
-      restartQueued = true;
+      )
+      restartQueued = true
     }
-    return;
+    return
   }
 
-  restartInProgress = true;
+  restartInProgress = true
 
+  const interpreter = getConfig('sqlmeshui.pythonInterpreter', [])
+  if (
+    interpreter
+    && interpreter.length > 0
+    && checkVersion(await resolveInterpreter(interpreter))
+  ) {
+    traceVerbose(
+        `Using interpreter from {serverInfo.module}.interpreter: ${interpreter.join(' ')}`,
+    )
+    // Restart!!!
+    // lsClient = await restartServer(serverId, serverName, outputChannel, lsClient);
 
-    const interpreter = getConfig("sqlmeshui.pythonInterpreter", []);
-    if (
-      interpreter &&
-      interpreter.length > 0 &&
-      checkVersion(await resolveInterpreter(interpreter))
-    ) {
-      traceVerbose(
-        `Using interpreter from {serverInfo.module}.interpreter: ${interpreter.join(" ")}`,
-      );
-      // Restart!!!
-      // lsClient = await restartServer(serverId, serverName, outputChannel, lsClient);
-
-      restartInProgress = false;
-      if (restartQueued) {
-        restartQueued = false;
-        await runServer();
-      }
-
-      return;
+    restartInProgress = false
+    if (restartQueued) {
+      restartQueued = false
+      await runServer()
     }
 
-    const interpreterDetails = await getInterpreterDetails();
-    if (interpreterDetails.path) {
-      traceLog(
-        `Using interpreter from Python extension: ${interpreterDetails.path.join(" ")}`,
-      );
-      // Restart!!!
-      // lsClient = await restartServer(serverId, serverName, outputChannel, lsClient);
+    return
+  }
 
-      restartInProgress = false;
-      if (restartQueued) {
-        restartQueued = false;
-        await runServer();
-      }
+  const interpreterDetails = await getInterpreterDetails()
+  if (interpreterDetails.path) {
+    traceLog(
+        `Using interpreter from Python extension: ${interpreterDetails.path.join(' ')}`,
+    )
+    // Restart!!!
+    // lsClient = await restartServer(serverId, serverName, outputChannel, lsClient);
 
-      return;
+    restartInProgress = false
+    if (restartQueued) {
+      restartQueued = false
+      await runServer()
     }
-  
 
-    restartInProgress = false;
+    return
+  }
+
+  restartInProgress = false
 
   // updateStatus(
   //   vscode.l10n.t("Please select a Python interpreter."),
   //   vscode.LanguageStatusSeverity.Error,
   // );
   traceError(
-    "Python interpreter missing:\r\n" +
-      "[Option 1] Select Python interpreter using the ms-python.python.\r\n" +
-      `[Option 2] Set an interpreter using "sqlmeshui.pythonInterpreter" setting.\r\n` +
-      "Please use Python 3.10 or greater.",
-  );
+    'Python interpreter missing:\r\n'
+    + '[Option 1] Select Python interpreter using the ms-python.python.\r\n'
+    + `[Option 2] Set an interpreter using "sqlmeshui.pythonInterpreter" setting.\r\n`
+    + 'Please use Python 3.10 or greater.',
+  )
 };
 
-
-async function loadPythonExtension(ctx: ExtensionContext){
-  const interpreter = getConfig("sqlmeshui.pythonInterpreter", []);
+async function loadPythonExtension(ctx: ExtensionContext) {
+  const interpreter = getConfig('sqlmeshui.pythonInterpreter', [])
   if (interpreter === undefined || interpreter.length === 0) {
-    traceLog(`Python extension loading`);
-    await initializePython(ctx.subscriptions);
-    const details = await getInterpreterDetails();
-    traceLog(details);
-    traceLog(`Python extension loaded`);
-  } else {
-    await runServer();
+    traceLog(`Python extension loading`)
+    await initializePython(ctx.subscriptions)
+    const details = await getInterpreterDetails()
+    traceLog(details)
+    traceLog(`Python extension loaded`)
+  }
+  else {
+    await runServer()
   }
 }

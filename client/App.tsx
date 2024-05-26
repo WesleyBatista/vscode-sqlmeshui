@@ -3,7 +3,6 @@ import './App.css'
 
 import { resolve as getElementSourceMetadata } from 'element-to-source'
 import type { ExtensionConfiguration } from '../src/ExtensionConfiguration'
-import Toolbar from './components/toolbar/toolbar'
 import Viewport from './components/viewport/viewport'
 import Connection from './connection'
 import { CDPHelper } from './utils/cdpHelper'
@@ -58,7 +57,7 @@ class App extends React.Component<any, IState> {
   private connection: Connection
   private viewport: Viewport = undefined!
   private cdpHelper: CDPHelper
-  private nextViewportSize: { width: number; height: number } | undefined
+  private nextViewportSize: { width: number, height: number } | undefined
 
   constructor(props: any) {
     super(props)

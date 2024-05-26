@@ -26,7 +26,7 @@
 }
 
 .resizer-top:before {
-  content: '';
+  content: "";
   position: absolute;
   top: calc(50% + 1px);
   left: calc(50% - 12px);
@@ -36,7 +36,7 @@
 }
 
 .resizer-top:after {
-  content: '';
+  content: "";
   position: absolute;
   top: calc(50% - 3px);
   left: calc(50% - 12px);
@@ -54,7 +54,7 @@
 }
 
 .resizer-top-left:before {
-  content: '';
+  content: "";
   position: absolute;
   left: 2px;
   bottom: 2px;
@@ -73,7 +73,7 @@
 }
 
 .resizer-top-right:before {
-  content: '';
+  content: "";
   position: absolute;
   right: 2px;
   bottom: 2px;
@@ -84,7 +84,7 @@
 }
 
 .resizer-bottom:before {
-  content: '';
+  content: "";
   position: absolute;
   top: calc(50% + 1px);
   left: calc(50% - 12px);
@@ -98,7 +98,7 @@
 }
 
 .resizer-bottom:after {
-  content: '';
+  content: "";
   position: absolute;
   top: calc(50% - 3px);
   left: calc(50% - 12px);
@@ -116,7 +116,7 @@
 }
 
 .resizer-bottom-left:before {
-  content: '';
+  content: "";
   position: absolute;
   left: 2px;
   bottom: 2px;
@@ -135,7 +135,7 @@
 }
 
 .resizer-bottom-right:before {
-  content: '';
+  content: "";
   position: absolute;
   right: 2px;
   bottom: 2px;
@@ -150,7 +150,7 @@
 }
 
 .resizer-left:before {
-  content: '';
+  content: "";
   position: absolute;
   left: 2px;
   top: calc(50% - 12px);
@@ -160,7 +160,7 @@
 }
 
 .resizer-left:after {
-  content: '';
+  content: "";
   position: absolute;
   left: 6px;
   top: calc(50% - 12px);
@@ -174,7 +174,7 @@
 }
 
 .resizer-right:before {
-  content: '';
+  content: "";
   position: absolute;
   left: 2px;
   top: calc(50% - 12px);
@@ -184,7 +184,7 @@
 }
 
 .resizer-right:after {
-  content: '';
+  content: "";
   position: absolute;
   left: 6px;
   top: calc(50% - 12px);
