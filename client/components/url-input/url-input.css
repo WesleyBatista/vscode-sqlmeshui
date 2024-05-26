@@ -1,0 +1,74 @@
+.urlbar {
+  display: flex;
+  flex: 1;
+  user-select: all;
+  margin: 0 4px 0 4px;
+  padding: 0 6px;
+  width: 100%;
+  height: 29px;
+}
+
+input,
+select {
+  color: var(--vscode-input-foreground);
+  border: 0;
+  outline: none !important;
+  border-radius: 2px;
+  background: var(--vscode-input-background);
+  border: 1px solid var(--vscode-input-border);
+  color: var(--vscode-input-foreground);
+  overflow: hidden;
+}
+
+input:focus,
+select:focus,
+input:active,
+select:active {
+  border-color: var(--vscode-inputOption-activeBorder);
+  color: var(--vscode-inputOption-activeForeground);
+}
+
+.contextMenu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #484848;
+  padding: 0;
+  margin: 0;
+  z-index: 1100;
+  width: 150px;
+  list-style-type: none;
+}
+
+.contextMenuItem {
+  border: 0;
+  outline: 0;
+  padding: 5px 10px 5px 10px;
+  text-align: left;
+  vertical-align: middle;
+  cursor: default;
+}
+
+.contextMenuItem:hover {
+  background-color: #ebebeb;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.hidden {
+  display: none;
+}
+.separator {
+  background-color: #ccc;
+  height: 1px;
+  padding: 0;
+  margin: 3px 0 3px 0;
+}
