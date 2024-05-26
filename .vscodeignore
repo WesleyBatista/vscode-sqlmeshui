@@ -1,0 +1,14 @@
+.eslintignore
+.github
+.gitignore
+.vscode
+.yarnrc
+/index.html
+tsconfig.json
+vite.config.ts
+yarn.lock
+
+cleint/
+client/*
+src/*
+node_modules/*

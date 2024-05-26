@@ -1,0 +1,37 @@
+.device-settings {
+  display: none;
+  padding: 8px;
+}
+
+.device-settings * {
+  vertical-align: middle;
+}
+
+.device-settings.active {
+  display: block;
+}
+
+.device-selector {
+  height: 29px;
+  margin: 0 8px;
+  padding: 6px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.viewport-size-input {
+  max-width: 50px;
+  height: 29px;
+  box-sizing: border-box;
+  text-align: center;
+  outline: 0;
+  -moz-appearance: textfield;
+}
+
+.metadata .spacer {
+  padding: 0 2px;
+}
